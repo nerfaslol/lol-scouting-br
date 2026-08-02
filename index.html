@@ -98,7 +98,7 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 .slot.hit{border-color:rgba(212,176,106,.5)}
 .slot.hit .role{color:var(--gold)}
 .rail svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.rail svg path{fill:none;stroke-width:1.6;stroke-linecap:round;
+.rail svg path{fill:none;stroke-width:2.4;stroke-linecap:round;
   stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
   animation:draw .9s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -562,8 +562,8 @@ function drawRails(){
       const col = same ? goldc : stroke;
       const d = (i*.09).toFixed(2);
       out += `<path d="M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}"
-        style="stroke:${col};opacity:${same?.95:.65};--d:${d}s"/>
-        <circle cx="${x2}" cy="${y2}" r="2.6" style="fill:${col};--d:${d}s"/>`;
+        style="stroke:${col};opacity:${same?1:.9};--d:${d}s"/>
+        <circle cx="${x2}" cy="${y2}" r="3.2" style="fill:${col};--d:${d}s"/>`;
     });
     svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     svg.innerHTML = out;
