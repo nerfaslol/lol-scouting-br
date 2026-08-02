@@ -546,7 +546,9 @@ function drawRails(){
     if(getComputedStyle(svg).display === 'none'){ svg.innerHTML=''; return; }
     const side = rail.dataset.side;
     const box = rail.getBoundingClientRect();
-    const stroke = side==='blue' ? 'var(--beacon)' : 'var(--ember)';
+    const cs = getComputedStyle(document.documentElement);
+    const stroke = cs.getPropertyValue(side==='blue' ? '--beacon' : '--ember').trim();
+    const goldc = cs.getPropertyValue('--gold').trim();
     let out = '';
     PLAYERS.filter(p=>p.side===side).forEach((p,i)=>{
       const a = rail.querySelector(`[data-slot="L-${side}-${p.assigned}"]`);
@@ -557,15 +559,18 @@ function drawRails(){
       const x2 = br.left - box.left - 4,  y2 = br.top + br.height/2 - box.top;
       const dx = (x2-x1) * .55;
       const same = p.assigned === p.real;
-      const col = same ? 'var(--gold)' : stroke;
-      const len = Math.hypot(x2-x1, y2-y1) + Math.abs(y2-y1);
+      const col = same ? goldc : stroke;
+      const d = (i*.09).toFixed(2);
       out += `<path d="M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}"
-        stroke="${col}" opacity="${same?.95:.6}"
-        style="--len:${len.toFixed(0)};--d:${(i*.09).toFixed(2)}s"/>
-        <circle cx="${x2}" cy="${y2}" r="2.6" fill="${col}" style="--d:${(i*.09).toFixed(2)}s"/>`;
+        style="stroke:${col};opacity:${same?.95:.65};--d:${d}s"/>
+        <circle cx="${x2}" cy="${y2}" r="2.6" style="fill:${col};--d:${d}s"/>`;
     });
     svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     svg.innerHTML = out;
+    // dasharray precisa do comprimento real da curva, medido só depois de inserir
+    svg.querySelectorAll('path').forEach(path=>{
+      path.style.setProperty('--len', path.getTotalLength().toFixed(0));
+    });
   });
 }
 
