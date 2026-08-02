@@ -32,7 +32,7 @@ body::before{
     radial-gradient(620px 400px at 50% -8%, rgba(166,136,255,.10), transparent 65%),
     radial-gradient(620px 400px at 88% -6%, rgba(255,106,69,.11), transparent 65%);
 }
-.shell{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:0 20px 96px}
+.shell{position:relative;z-index:1;max-width:1340px;margin:0 auto;padding:0 20px 96px}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
 
@@ -93,11 +93,11 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
   font:700 10px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   flex:none;
 }
-.slot .who{min-width:0;overflow:hidden}
+.slot .who{min-width:0;flex:1;overflow:hidden}
 .slot .who .n{
-  font:600 12.5px/1.2 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:block;font:600 12.5px/1.2 var(--body);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.slot .who .t{font:400 10.5px/1.2 var(--mono);color:var(--muted)}
 .slot.hit{border-color:rgba(212,176,106,.5)}
 .slot.hit .role{color:var(--gold)}
 .rail svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -343,6 +343,7 @@ footer b{color:var(--chalk);font-weight:600}
 
 <script>
 const ROLE = {TOP:'Topo', JG:'Selva', MID:'Meio', ADC:'Atirador', SUP:'Suporte'};
+const ROLE_ABBR = {TOP:'TOP', JG:'SEL', MID:'MEI', ADC:'ADC', SUP:'SUP'};
 const ORDER = ['TOP','JG','MID','ADC','SUP'];
 const TIER = {
   'Mestre':'--t-master','Diamante':'--t-diamond','Esmeralda':'--t-emerald',
@@ -606,17 +607,17 @@ function buildRails(){
     const drift = team.filter(p=>p.assigned!==p.real).length;
     const left = ORDER.map(r=>{
       const p = team.find(x=>x.assigned===r);
-      return `<div class="slot" data-slot="L-${side}-${r}">
-        <span class="role">${ROLE[r]}</span>
-        <span class="who"><span class="n">${p.nick}</span><span class="t">${p.tag}</span></span>
+      return `<div class="slot" data-slot="L-${side}-${r}" title="${ROLE[r]}: ${p.nick}${p.tag}">
+        <span class="role">${ROLE_ABBR[r]}</span>
+        <span class="who"><span class="n">${p.nick}</span></span>
       </div>`;
     }).join('');
     const right = ORDER.map(r=>{
       const hit = team.some(x=>x.real===r && x.assigned===r);
       const who = team.filter(x=>x.real===r).map(x=>x.nick).join(', ') || '—';
-      return `<div class="slot target${hit?' hit':''}" data-slot="R-${side}-${r}">
-        <span class="who"><span class="n">${who}</span></span>
-        <span class="role">${ROLE[r]}</span>
+      return `<div class="slot target${hit?' hit':''}" data-slot="R-${side}-${r}" title="${ROLE[r]}: ${who}">
+        <span class="who"><span class="n" style="text-align:right">${who}</span></span>
+        <span class="role">${ROLE_ABBR[r]}</span>
       </div>`;
     }).join('');
     return `<article class="rail" data-side="${side}">
