@@ -11,7 +11,7 @@
 <style>
 :root{
   --void:#0a0e17; --slate:#151d2c; --slate-2:#1c2637; --line:#26314a;
-  --beacon:#5aa9ff; --ember:#ff6a45; --gold:#d4b06a; --chalk:#e8eef8;
+  --beacon:#5aa9ff; --ember:#ff6a45; --vertex:#a688ff; --gold:#d4b06a; --chalk:#e8eef8;
   --muted:#7b88a1; --win:#4ade80; --loss:#f8717a;
   --t-master:#b06bff; --t-diamond:#6ec6ff; --t-emerald:#35d68f;
   --t-platinum:#4dd0c0; --t-gold:#d4b06a; --t-silver:#a8b4c4;
@@ -28,8 +28,9 @@ body{
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(680px 420px at 18% -6%, rgba(90,169,255,.13), transparent 65%),
-    radial-gradient(680px 420px at 82% -6%, rgba(255,106,69,.11), transparent 65%);
+    radial-gradient(620px 400px at 12% -6%, rgba(90,169,255,.13), transparent 65%),
+    radial-gradient(620px 400px at 50% -8%, rgba(166,136,255,.10), transparent 65%),
+    radial-gradient(620px 400px at 88% -6%, rgba(255,106,69,.11), transparent 65%);
 }
 .shell{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:0 20px 96px}
 a{color:inherit}
@@ -61,25 +62,27 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 .meta-strip span b{color:var(--gold);font-family:var(--mono);letter-spacing:0;font-size:13px}
 
 /* ---------- rail (signature) ---------- */
-.rails{display:grid;gap:26px;grid-template-columns:1fr 1fr;margin-top:14px}
+.rails{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(318px,1fr));margin-top:14px}
 .rail{
   position:relative;background:linear-gradient(180deg,var(--slate-2),var(--slate));
   border:1px solid var(--line);border-radius:14px;padding:20px 18px 22px;
 }
 .rail[data-side=blue]{border-top:2px solid var(--beacon)}
 .rail[data-side=red]{border-top:2px solid var(--ember)}
-.rail-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.rail[data-side=tge]{border-top:2px solid var(--vertex)}
+.rail-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:6px}
 .rail-head h2{font-size:17px;text-transform:uppercase;letter-spacing:.14em}
 .rail[data-side=blue] .rail-head h2{color:var(--beacon)}
 .rail[data-side=red] .rail-head h2{color:var(--ember)}
+.rail[data-side=tge] .rail-head h2{color:var(--vertex)}
 .rail-head .count{font:600 11px/1 var(--disp);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 .rail-legend{
-  display:grid;grid-template-columns:1fr 74px 1fr;gap:8px;
+  display:grid;grid-template-columns:1fr 58px 1fr;gap:8px;
   font:600 9.5px/1 var(--disp);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
   padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:12px;
 }
 .rail-legend .r{text-align:right}
-.rail-grid{display:grid;grid-template-columns:1fr 74px 1fr;gap:8px;align-items:start}
+.rail-grid{display:grid;grid-template-columns:1fr 58px 1fr;gap:8px;align-items:start}
 .rail-col{display:flex;flex-direction:column;gap:8px}
 .slot{
   display:flex;align-items:center;gap:9px;min-height:46px;padding:7px 10px;
@@ -92,7 +95,7 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 }
 .slot .who{min-width:0}
 .slot .who .n{
-  font:600 13.5px/1.2 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font:600 12.5px/1.2 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .slot .who .t{font:400 10.5px/1.2 var(--mono);color:var(--muted)}
 .slot.hit{border-color:rgba(212,176,106,.5)}
@@ -141,9 +144,11 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 }
 .team[data-side=blue] .team-bar::after{background:var(--beacon)}
 .team[data-side=red] .team-bar::after{background:var(--ember)}
+.team[data-side=tge] .team-bar::after{background:var(--vertex)}
 .team-bar h2{font-size:26px;text-transform:uppercase;letter-spacing:.1em}
 .team[data-side=blue] .team-bar h2{color:var(--beacon)}
 .team[data-side=red] .team-bar h2{color:var(--ember)}
+.team[data-side=tge] .team-bar h2{color:var(--vertex)}
 .team-bar span{
   font:600 10.5px/1 var(--disp);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
 }
@@ -157,6 +162,7 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 .dossier:hover{transform:translateY(-3px);border-color:var(--muted)}
 .dossier[data-side=blue]{box-shadow:inset 3px 0 0 var(--beacon)}
 .dossier[data-side=red]{box-shadow:inset 3px 0 0 var(--ember)}
+.dossier[data-side=tge]{box-shadow:inset 3px 0 0 var(--vertex)}
 
 .d-head{display:flex;gap:13px;align-items:center;padding:17px 18px 15px}
 .portrait{
@@ -262,11 +268,11 @@ footer b{color:var(--chalk);font-weight:600}
   <header class="masthead">
     <p class="eyebrow">Scouting · Servidor BR · Season 2026</p>
     <h1>Roster <span class="drift">Drift</span></h1>
-    <p>Dez jogadores, duas escalações. <b>Oito deles não jogam a rota em que foram escalados.</b>
+    <p>Quinze jogadores, três escalações. <b>Treze deles não jogam a rota em que foram escalados.</b>
        O trilho abaixo liga a rota atribuída à rota que o histórico de partidas realmente mostra.</p>
     <div class="meta-strip">
-      <span>Jogadores <b>10</b></span>
-      <span>Fora de rota <b>8</b></span>
+      <span>Jogadores <b>15</b></span>
+      <span>Fora de rota <b>13</b></span>
       <span>Maior elo <b>Mestre</b></span>
       <span>Fonte <b>op.gg</b></span>
     </div>
@@ -276,19 +282,19 @@ footer b{color:var(--chalk);font-weight:600}
 
   <section class="band">
     <div>
-      <div class="k">5/5</div>
-      <div class="l">No <b>Time 1</b>, nenhum jogador está na rota certa. A lista inteira parece
-        ter sido deslocada uma posição.</div>
+      <div class="k">13/15</div>
+      <div class="l">Treze dos quinze jogam outra rota. No <b>Time 1</b> e no <b>TGE</b> o
+        deslocamento é total: nenhum dos cinco está no lugar.</div>
     </div>
     <div>
-      <div class="k">2/5</div>
-      <div class="l">No <b>Time 2</b>, só <b>pardão do pneu</b> e <b>spear of hell</b> caem
-        na rota em que foram escalados.</div>
+      <div class="k">2</div>
+      <div class="l">Só <b>pardão do pneu</b> e <b>spear of hell</b>, os dois do <b>Time 2</b>,
+        caem na rota em que foram escalados.</div>
     </div>
     <div>
-      <div class="k">5</div>
-      <div class="l">Cinco dos dez são <b>meio</b> de verdade — o gargalo das duas escalações
-        não é falta de talento, é excesso de mid laner disputando a mesma vaga.</div>
+      <div class="k">1</div>
+      <div class="l">Um único <b>suporte</b> de verdade em quinze jogadores — <b>Phelpz1</b>, e
+        mesmo assim ele migrou para a rota faz uma semana. Contra cinco meios e quatro atiradores.</div>
     </div>
   </section>
 
@@ -297,6 +303,7 @@ footer b{color:var(--chalk);font-weight:600}
     <button class="btn" data-filter="all" aria-pressed="true">Todos</button>
     <button class="btn" data-filter="blue" aria-pressed="false">Time 1</button>
     <button class="btn" data-filter="red" aria-pressed="false">Time 2</button>
+    <button class="btn" data-filter="tge" aria-pressed="false">TGE</button>
     <button class="btn" data-sort="rank" aria-pressed="true">Por elo</button>
     <button class="btn" data-sort="wr" aria-pressed="false">Por winrate</button>
   </nav>
@@ -317,6 +324,14 @@ footer b{color:var(--chalk);font-weight:600}
     <div class="deck"></div>
   </section>
 
+  <section class="team" id="team-tge" data-side="tge">
+    <div class="team-bar">
+      <h2>TGE</h2>
+      <span>5 jogadores · 5 fora de rota · pico Diamante 4</span>
+    </div>
+    <div class="deck"></div>
+  </section>
+
   <footer>
     Dados extraídos do <b>op.gg</b> (servidor BR) em <b>2 de agosto de 2026</b>, referentes à
     ranqueada solo/duo da season 2026.<br>
@@ -333,7 +348,9 @@ const TIER = {
   'Mestre':'--t-master','Diamante':'--t-diamond','Esmeralda':'--t-emerald',
   'Platina':'--t-platinum','Ouro':'--t-gold','Prata':'--t-silver'
 };
-const RANKVAL = {'Mestre':6,'Diamante':5,'Esmeralda':4,'Platina':3,'Ouro':2,'Prata':1};
+const RANKVAL = {'Mestre':6,'Diamante':5,'Esmeralda':4,'Platina':3,'Ouro':2,'Prata':1,'Ferro':0};
+const SIDES = ['blue','red','tge'];
+const SIDE_VAR = {blue:'--beacon', red:'--ember', tge:'--vertex'};
 
 const PLAYERS = [
 /* ============================ TIME 1 ============================ */
@@ -482,6 +499,83 @@ const PLAYERS = [
   ],
   recent:[{c:'Tristana',w:1,l:0},{c:'Caitlyn',w:0,l:1}],
   read:'Esmeralda 1, mas <b>44% de vitória em 163 jogos</b> — o elo veio de antes. Joga meio e mago no bot. <span class="good">Os picks que funcionam são os de menor volume:</span> Brand 67%, Heimerdinger 60%, Hwei 55%. Os mais jogados (Mel 33%, Caitlyn 40%) são os que estão puxando o winrate para baixo.'
+},
+/* ============================= TGE ============================== */
+{
+  side:'tge', nick:'ImperadorMendigo', tag:'#007', slug:'ImperadorMendigo-007',
+  assigned:'TOP', real:'JG',
+  solo:{t:'Platina',d:3,lp:56}, flex:{t:'Prata',d:2,lp:26},
+  wr:48, w:14, l:15,
+  pool:[
+    {c:'Warwick',g:16,wr:63,kda:2.30},
+    {c:'Fizz',g:8,wr:50,kda:2.32},
+    {c:'Amumu',g:1,wr:100,kda:3.60},
+    {c:'Lulu',g:1,wr:0,kda:0.89}
+  ],
+  mastery:['Vayne','Brand','Warwick','Fizz'],
+  recent:[{c:'Fizz',w:2,l:2}],
+  read:'Escalado no topo, mas a season inteira dele é <b>selva</b>: Warwick a 63% em 16 jogos é o único pick com volume real. <span class="flag">A maior maestria é Vayne (212 mil pontos) — e ela não aparece uma única vez na ranqueada.</span> Só 26 partidas na season.'
+},
+{
+  side:'tge', nick:'PHD em Pedrofred', tag:'#UEMG', slug:'PHD%20em%20Pedrofred-UEMG',
+  assigned:'JG', real:'ADC',
+  solo:{t:'Platina',d:4,lp:4}, flex:{t:'Platina',d:4,lp:94},
+  wr:48, w:null, l:null,
+  pool:[
+    {c:'Smolder',g:13,wr:62,kda:2.68},
+    {c:'Corki',g:12,wr:67,kda:3.94},
+    {c:'Senna',g:10,wr:40,kda:3.88},
+    {c:'Sivir',g:7,wr:43,kda:2.70},
+    {c:'Jhin',g:7,wr:29,kda:3.38},
+    {c:'Caitlyn',g:7,wr:29,kda:2.42},
+    {c:'Neeko',g:5,wr:60,kda:2.88}
+  ],
+  recent:[{c:'Camille',w:1,l:0},{c:'Leona',w:0,l:1},{c:'Alistar',w:0,l:1},{c:'Brand',w:0,l:1}],
+  read:'Atirador de verdade — <b>as dez primeiras escolhas da season são todas do bot</b>. O problema é dispersão: nenhum campeão passa de 13 jogos. Corki (67%) e Smolder (62%) rendem; <span class="flag">Jhin e Caitlyn, a 29%, sangram</span>. Escolher três e parar de rodar resolve.'
+},
+{
+  side:'tge', nick:'Gudereck Gostoso', tag:'#7777', slug:'Gudereck%20Gostoso-7777',
+  assigned:'MID', real:'TOP',
+  solo:{t:'Ouro',d:3,lp:12}, flex:null,
+  wr:47, w:52, l:58,
+  pool:[
+    {c:'Gangplank',g:13,wr:62,kda:2.78},
+    {c:'Sion',g:7,wr:57,kda:2.67},
+    {c:'Fiora',g:6,wr:33,kda:1.59},
+    {c:'Malzahar',g:5,wr:60,kda:2.17},
+    {c:'Ryze',g:5,wr:40,kda:1.61}
+  ],
+  recent:[{c:'Ziggs',w:1,l:0},{c:'Sivir',w:1,l:0},{c:'Warwick',w:1,l:0},{c:'Jhin',w:0,l:1},{c:'Ryze',w:0,l:1}],
+  read:'Escalado no meio, joga <b>topo</b>. Gangplank (62%, 371 mil de maestria) e Sion (57%) sustentam o perfil; <span class="flag">Fiora a 33% é o furo</span>. É o menor elo dos quinze — Ouro 3 num time que tem Diamante.'
+},
+{
+  side:'tge', nick:'Primo', tag:'#BRA', slug:'Primo-BRA',
+  assigned:'ADC', real:'JG',
+  solo:{t:'Esmeralda',d:3,lp:98}, flex:{t:'Ferro',d:1,lp:78},
+  wr:74, w:69, l:24, badge:'Maior winrate dos 15',
+  pool:[
+    {c:'Udyr',g:85,wr:76,kda:4.66},
+    {c:"Vel'Koz",g:2,wr:50,kda:1.81},
+    {c:'Xerath',g:2,wr:50,kda:2.00},
+    {c:'Rumble',g:2,wr:50,kda:2.36}
+  ],
+  recent:[{c:'Udyr',w:2,l:2},{c:"Vel'Koz",w:1,l:0},{c:'Volibear',w:1,l:0},{c:'Rumble',w:0,l:1},{c:'Smolder',w:0,l:1},{c:'Vex',w:0,l:1}],
+  read:'<span class="good">O número mais forte de todo o levantamento.</span> <b>Udyr em 85 partidas a 76%, com KDA 4,66</b> — e 74% de vitória geral na season. É caçador, não atirador. <span class="flag">Fora do Udyr não existe pool:</span> nenhum outro campeão passa de 2 jogos.'
+},
+{
+  side:'tge', nick:'Xororó', tag:'#sirob', slug:'Xoror%C3%B3-sirob',
+  assigned:'SUP', real:'ADC',
+  solo:{t:'Diamante',d:4,lp:66}, flex:null,
+  wr:51, w:19, l:18, badge:'Pico: Diamante 1 · top 7,6%',
+  pool:[
+    {c:'Ezreal',g:16,wr:56,kda:3.40},
+    {c:'Draven',g:4,wr:50,kda:1.68},
+    {c:'Varus',g:3,wr:33,kda:2.22},
+    {c:'Garen',g:2,wr:100,kda:3.33},
+    {c:'Caitlyn',g:2,wr:50,kda:3.10}
+  ],
+  recent:[{c:'Garen',w:1,l:0},{c:'Lee Sin',w:1,l:0},{c:'Ezreal',w:0,l:1}],
+  read:'Maior elo do TGE e pico <b>Diamante 1</b> na season passada, mas só 37 ranqueadas neste ano. É <b>atirador</b>: Ezreal (16 jogos, 56%) e maestria em Jinx, Vayne, Draven e Kai’Sa. <span class="flag">De suporte não há sinal nenhum no perfil.</span>'
 }
 ];
 
@@ -503,10 +597,12 @@ const wrColor = v => v >= 55 ? 'var(--win)' : v <= 45 ? 'var(--loss)' : 'var(--g
 const rankStr = r => r ? (r.d ? `${r.t} ${r.d}` : r.t) : null;
 
 /* ---------- rails ---------- */
+const TEAM_LABEL = {blue:'Time 1', red:'Time 2', tge:'TGE'};
+
 function buildRails(){
-  const html = ['blue','red'].map(side=>{
+  const html = SIDES.map(side=>{
     const team = PLAYERS.filter(p=>p.side===side);
-    const label = side==='blue' ? 'Time 1' : 'Time 2';
+    const label = TEAM_LABEL[side];
     const drift = team.filter(p=>p.assigned!==p.real).length;
     const left = ORDER.map(r=>{
       const p = team.find(x=>x.assigned===r);
@@ -547,7 +643,7 @@ function drawRails(){
     const side = rail.dataset.side;
     const box = rail.getBoundingClientRect();
     const cs = getComputedStyle(document.documentElement);
-    const stroke = cs.getPropertyValue(side==='blue' ? '--beacon' : '--ember').trim();
+    const stroke = cs.getPropertyValue(SIDE_VAR[side]).trim();
     const goldc = cs.getPropertyValue('--gold').trim();
     let out = '';
     PLAYERS.filter(p=>p.side===side).forEach((p,i)=>{
@@ -634,7 +730,8 @@ function card(p){
       </div>
       ${flex ? `<div class="stat"><i>Flex</i><b>${flex}</b><small>${p.flex.lp} PdL</small></div>` : ''}
       <div class="stat">
-        <i>Vitórias</i><b class="${wrClass(p.wr)}">${p.wr}%</b><small>${p.w}V ${p.l}D</small>
+        <i>Vitórias</i><b class="${wrClass(p.wr)}">${p.wr}%</b>
+        <small>${p.w != null ? `${p.w}V ${p.l}D` : 'solo/duo'}</small>
       </div>
     </div>
     ${p.badge ? `<div class="d-sect" style="padding-top:0;border:0"><span class="chip-role" style="color:var(--gold);border-color:var(--gold)">${p.badge}</span></div>` : ''}
@@ -650,7 +747,7 @@ function card(p){
 }
 
 function render(){
-  ['blue','red'].forEach(side=>{
+  SIDES.forEach(side=>{
     document.querySelector(`#team-${side} .deck`).innerHTML =
       PLAYERS.filter(p=>p.side===side).map(card).join('');
   });
