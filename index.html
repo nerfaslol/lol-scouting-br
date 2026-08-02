@@ -83,17 +83,17 @@ h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 }
 .rail-legend .r{text-align:right}
 .rail-grid{display:grid;grid-template-columns:1fr 58px 1fr;gap:8px;align-items:start}
-.rail-col{display:flex;flex-direction:column;gap:8px}
+.rail-col{display:flex;flex-direction:column;gap:8px;min-width:0}
 .slot{
-  display:flex;align-items:center;gap:9px;min-height:46px;padding:7px 10px;
-  background:#0e1420;border:1px solid var(--line);border-radius:9px;
+  display:flex;align-items:center;gap:9px;min-height:46px;padding:7px 10px;min-width:0;
+  background:#0e1420;border:1px solid var(--line);border-radius:9px;overflow:hidden;
 }
 .slot.target{justify-content:flex-end;text-align:right}
 .slot .role{
   font:700 10px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
   flex:none;
 }
-.slot .who{min-width:0}
+.slot .who{min-width:0;overflow:hidden}
 .slot .who .n{
   font:600 12.5px/1.2 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
