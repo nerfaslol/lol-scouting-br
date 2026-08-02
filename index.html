@@ -2,300 +2,674 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scouting Report — Time BR</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roster Drift — Scouting BR</title>
+<meta name="description" content="Dossiê de scouting de 10 jogadores do servidor BR: rotas reais, pool de campeões da season e forma recente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#080b12; --panel:#101623; --panel2:#151d2e; --line:#222d44;
-    --gold:#c8aa6e; --gold2:#f0e6d2; --txt:#cdd6e6; --dim:#7d8aa3;
-    --win:#3fbf7f; --lose:#e0525f; --warn:#e8a33d;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(900px 500px at 50% -10%,#16223a 0%,var(--bg) 60%);
-    color:var(--txt);font:15px/1.5 "Segoe UI",system-ui,sans-serif;padding:32px 18px 60px}
-  .wrap{max-width:1180px;margin:0 auto}
-  header{text-align:center;margin-bottom:34px}
-  h1{margin:0;font-size:clamp(26px,4vw,40px);letter-spacing:.16em;color:var(--gold2);text-transform:uppercase}
-  h1 span{color:var(--gold)}
-  .sub{color:var(--dim);font-size:13px;letter-spacing:.1em;margin-top:8px;text-transform:uppercase}
+:root{
+  --void:#0a0e17; --slate:#151d2c; --slate-2:#1c2637; --line:#26314a;
+  --beacon:#5aa9ff; --ember:#ff6a45; --gold:#d4b06a; --chalk:#e8eef8;
+  --muted:#7b88a1; --win:#4ade80; --loss:#f8717a;
+  --t-master:#b06bff; --t-diamond:#6ec6ff; --t-emerald:#35d68f;
+  --t-platinum:#4dd0c0; --t-gold:#d4b06a; --t-silver:#a8b4c4;
+  --disp:"Chakra Petch",system-ui,sans-serif;
+  --body:"Barlow",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--void);color:var(--chalk);font:16px/1.55 var(--body);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(680px 420px at 18% -6%, rgba(90,169,255,.13), transparent 65%),
+    radial-gradient(680px 420px at 82% -6%, rgba(255,106,69,.11), transparent 65%);
+}
+.shell{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:0 20px 96px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:3px}
 
-  .alert{max-width:840px;margin:26px auto 0;background:#2a1f0e;border:1px solid #5a4519;
-    border-left:4px solid var(--warn);border-radius:8px;padding:14px 18px;font-size:14px;color:#f0dfbb;text-align:left}
-  .alert b{color:var(--warn)}
+/* ---------- eyebrow / headings ---------- */
+.eyebrow{
+  font:600 11px/1 var(--disp);letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
+}
+h1,h2,h3{font-family:var(--disp);margin:0;font-weight:700;letter-spacing:.01em}
 
-  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));margin-top:30px}
-  .card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);
-    border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-  .card:hover{border-color:var(--gold)}
-  .chead{padding:16px 18px;border-bottom:1px solid var(--line);background:#0d1320}
-  .role{display:inline-block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-    background:var(--gold);color:#0d1320;padding:3px 10px;border-radius:20px;font-weight:700}
-  .role.real{background:transparent;border:1px solid var(--dim);color:var(--dim)}
-  .nick{font-size:20px;color:var(--gold2);margin:10px 0 2px;font-weight:600;word-break:break-word}
-  .tag{color:var(--dim);font-size:13px}
+/* ---------- masthead ---------- */
+.masthead{padding:64px 0 40px;text-align:center}
+.masthead h1{
+  font-size:clamp(40px,8.5vw,88px);line-height:.92;text-transform:uppercase;letter-spacing:.02em;
+}
+.masthead h1 .drift{
+  color:transparent;-webkit-text-stroke:1.5px var(--gold);
+  font-style:italic;
+}
+.masthead p{
+  max-width:52ch;margin:20px auto 0;color:var(--muted);font-size:16.5px;
+}
+.masthead p b{color:var(--chalk);font-weight:600}
+.meta-strip{
+  display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:28px;
+  font:600 11px/1 var(--disp);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.meta-strip span b{color:var(--gold);font-family:var(--mono);letter-spacing:0;font-size:13px}
 
-  .rank{display:flex;gap:10px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--line)}
-  .pill{background:#0b111c;border:1px solid var(--line);border-radius:7px;padding:7px 11px;font-size:12px}
-  .pill b{display:block;color:var(--gold2);font-size:14px;font-weight:600;margin-top:2px}
-  .pill i{font-style:normal;color:var(--dim);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+/* ---------- rail (signature) ---------- */
+.rails{display:grid;gap:26px;grid-template-columns:1fr 1fr;margin-top:14px}
+.rail{
+  position:relative;background:linear-gradient(180deg,var(--slate-2),var(--slate));
+  border:1px solid var(--line);border-radius:14px;padding:20px 18px 22px;
+}
+.rail[data-side=blue]{border-top:2px solid var(--beacon)}
+.rail[data-side=red]{border-top:2px solid var(--ember)}
+.rail-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.rail-head h2{font-size:17px;text-transform:uppercase;letter-spacing:.14em}
+.rail[data-side=blue] .rail-head h2{color:var(--beacon)}
+.rail[data-side=red] .rail-head h2{color:var(--ember)}
+.rail-head .count{font:600 11px/1 var(--disp);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.rail-legend{
+  display:grid;grid-template-columns:1fr 74px 1fr;gap:8px;
+  font:600 9.5px/1 var(--disp);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:12px;
+}
+.rail-legend .r{text-align:right}
+.rail-grid{display:grid;grid-template-columns:1fr 74px 1fr;gap:8px;align-items:start}
+.rail-col{display:flex;flex-direction:column;gap:8px}
+.slot{
+  display:flex;align-items:center;gap:9px;min-height:46px;padding:7px 10px;
+  background:#0e1420;border:1px solid var(--line);border-radius:9px;
+}
+.slot.target{justify-content:flex-end;text-align:right}
+.slot .role{
+  font:700 10px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  flex:none;
+}
+.slot .who{min-width:0}
+.slot .who .n{
+  font:600 13.5px/1.2 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.slot .who .t{font:400 10.5px/1.2 var(--mono);color:var(--muted)}
+.slot.hit{border-color:rgba(212,176,106,.5)}
+.slot.hit .role{color:var(--gold)}
+.rail svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.rail svg path{fill:none;stroke-width:1.6;stroke-linecap:round;
+  stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  animation:draw .9s cubic-bezier(.4,0,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.rail svg circle{opacity:0;animation:pop .3s ease forwards;animation-delay:calc(var(--d,0s) + .75s)}
+@keyframes pop{to{opacity:1}}
 
-  .sect{padding:14px 18px}
-  .sect h3{margin:0 0 10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{text-align:left;color:var(--dim);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-    padding:0 0 6px;font-weight:500}
-  td{padding:6px 0;border-top:1px solid #1a2337}
-  td.champ{color:var(--gold2)}
-  td.n{text-align:right;color:var(--dim)}
-  .wr{font-weight:700}
-  .hi{color:var(--win)} .lo{color:var(--lose)} .mid{color:var(--txt)}
-  .bar{height:4px;background:#1a2337;border-radius:3px;overflow:hidden;margin-top:4px}
-  .bar span{display:block;height:100%;background:var(--gold)}
+/* ---------- verdict band ---------- */
+.band{
+  margin-top:40px;display:grid;gap:1px;grid-template-columns:repeat(3,1fr);
+  background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.band div{background:var(--slate);padding:20px 22px}
+.band .k{font:700 34px/1 var(--mono);color:var(--gold)}
+.band .l{margin-top:8px;font-size:14px;color:var(--muted);line-height:1.45}
+.band .l b{color:var(--chalk);font-weight:600}
 
-  .recent{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{background:#0b111c;border:1px solid var(--line);border-radius:6px;padding:5px 9px;font-size:12px}
-  .chip b{color:var(--gold2);font-weight:600}
+/* ---------- controls ---------- */
+.controls{
+  position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  margin:56px 0 22px;padding:14px 0;background:linear-gradient(180deg,var(--void) 72%,transparent);
+}
+.controls .eyebrow{margin-right:6px}
+.btn{
+  font:600 11px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;
+  background:#0e1420;color:var(--muted);border:1px solid var(--line);
+  padding:9px 15px;border-radius:7px;cursor:pointer;transition:.16s;
+}
+.btn:hover{color:var(--chalk);border-color:var(--muted)}
+.btn[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:#0e1420}
 
-  footer{text-align:center;color:var(--dim);font-size:12px;margin-top:40px;line-height:1.8}
-  @media(max-width:520px){.grid{grid-template-columns:1fr}}
+/* ---------- dossier cards ---------- */
+.deck{display:grid;gap:20px;grid-template-columns:repeat(auto-fill,minmax(348px,1fr))}
+.dossier{
+  display:flex;flex-direction:column;background:linear-gradient(180deg,var(--slate-2),var(--slate));
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.2s;
+}
+.dossier:hover{transform:translateY(-3px);border-color:var(--muted)}
+.dossier[data-side=blue]{box-shadow:inset 3px 0 0 var(--beacon)}
+.dossier[data-side=red]{box-shadow:inset 3px 0 0 var(--ember)}
+
+.d-head{display:flex;gap:13px;align-items:center;padding:17px 18px 15px}
+.portrait{
+  width:56px;height:56px;flex:none;border-radius:10px;background:#0e1420;
+  border:1px solid var(--line);object-fit:cover;
+}
+.portrait.ph{
+  display:grid;place-items:center;font:700 20px/1 var(--disp);color:var(--muted);
+}
+.d-id{min-width:0;flex:1}
+.d-id h3{font-size:19px;line-height:1.15;word-break:break-word}
+.d-id .tagline{font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:2px}
+.roles{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.chip-role{
+  font:700 9.5px/1 var(--disp);letter-spacing:.13em;text-transform:uppercase;
+  padding:4px 8px;border-radius:5px;border:1px solid var(--line);color:var(--muted);
+}
+.chip-role.real{background:var(--gold);border-color:var(--gold);color:#0e1420}
+.arrow{color:var(--ember);font-size:12px;line-height:1}
+.arrow.same{color:var(--gold)}
+
+.d-rank{display:flex;gap:9px;flex-wrap:wrap;padding:0 18px 16px}
+.stat{
+  flex:1 1 96px;background:#0e1420;border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+}
+.stat i{
+  font-style:normal;display:block;font:600 9px/1 var(--disp);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:5px;
+}
+.stat b{display:block;font:600 15px/1.1 var(--disp);color:var(--tier,var(--chalk))}
+.stat small{display:block;font:400 11px/1.3 var(--mono);color:var(--muted);margin-top:3px}
+
+.d-sect{padding:15px 18px;border-top:1px solid var(--line)}
+.d-sect > h4{
+  margin:0 0 11px;font:700 10px/1 var(--disp);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+}
+.pool{display:flex;flex-direction:column;gap:9px}
+.pick{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center}
+.pick img,.pick .ph{width:28px;height:28px;border-radius:6px;background:#0e1420;border:1px solid var(--line)}
+.pick .ph{display:grid;place-items:center;font:700 11px/1 var(--disp);color:var(--muted)}
+.pick .body{min-width:0}
+.pick .row1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.pick .cname{font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick .g{font:400 11px/1 var(--mono);color:var(--muted);flex:none}
+.track{height:3px;background:#0e1420;border-radius:2px;margin-top:5px;overflow:hidden}
+.track span{display:block;height:100%;width:0;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.pick .nums{text-align:right;flex:none}
+.pick .wr{display:block;font:600 13px/1 var(--mono)}
+.pick .kda{display:block;font:400 10.5px/1.3 var(--mono);color:var(--muted);margin-top:2px}
+.hi{color:var(--win)} .lo{color:var(--loss)} .ev{color:var(--chalk)}
+
+.form{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{
+  display:flex;align-items:center;gap:6px;background:#0e1420;border:1px solid var(--line);
+  border-radius:6px;padding:4px 8px 4px 5px;font-size:12px;
+}
+.fchip img,.fchip .ph{width:20px;height:20px;border-radius:4px}
+.fchip .ph{display:grid;place-items:center;font:700 9px/1 var(--disp);color:var(--muted);background:#161f30}
+.fchip em{font-style:normal;font:400 11px/1 var(--mono);color:var(--muted)}
+
+.read{padding:15px 18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);line-height:1.5}
+.read b{color:var(--chalk);font-weight:600}
+.read .flag{color:var(--ember);font-weight:600}
+.read .good{color:var(--win);font-weight:600}
+.d-foot{margin-top:auto;padding:12px 18px;border-top:1px solid var(--line)}
+.d-foot a{
+  font:600 10px/1 var(--disp);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;transition:.16s;
+}
+.d-foot a:hover{color:var(--gold)}
+
+footer{
+  margin-top:64px;padding-top:26px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:13px;line-height:1.75;
+}
+footer b{color:var(--chalk);font-weight:600}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .rails{grid-template-columns:1fr}
+  .band{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .rail svg{display:none}
+  .rail-grid,.rail-legend{grid-template-columns:1fr;gap:6px}
+  .rail-legend .r{text-align:left}
+  .rail-legend .mid{display:none}
+  .rail-col.targets .slot{justify-content:flex-start;text-align:left}
+  .deck{grid-template-columns:1fr}
+  .masthead{padding:44px 0 30px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;transition-duration:.001ms!important}
+  .rail svg path{stroke-dashoffset:0}
+  .rail svg circle{opacity:1}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="shell">
 
-<header>
-  <h1>Scouting <span>Report</span></h1>
-  <div class="sub">League of Legends · Servidor BR · Season 2026</div>
-  <div class="alert">
-    <b>⚠ Atenção às rotas:</b> os dados do op.gg mostram que <b>nenhum</b> dos 5 jogadores atua na rota
-    que foi atribuída na lista original — as posições parecem estar deslocadas. Cada card mostra a
-    <b>rota atribuída</b> (dourado) e a <b>rota real</b> detectada pelo histórico (cinza).
-  </div>
-</header>
+  <header class="masthead">
+    <p class="eyebrow">Scouting · Servidor BR · Season 2026</p>
+    <h1>Roster <span class="drift">Drift</span></h1>
+    <p>Dez jogadores, duas escalações. <b>Oito deles não jogam a rota em que foram escalados.</b>
+       O trilho abaixo liga a rota atribuída à rota que o histórico de partidas realmente mostra.</p>
+    <div class="meta-strip">
+      <span>Jogadores <b>10</b></span>
+      <span>Fora de rota <b>8</b></span>
+      <span>Maior elo <b>Mestre</b></span>
+      <span>Fonte <b>op.gg</b></span>
+    </div>
+  </header>
 
-<div class="grid">
+  <section class="rails" id="rails"></section>
 
-  <!-- ============ V M ============ -->
-  <div class="card">
-    <div class="chead">
-      <span class="role">Atribuído: Top</span>
-      <span class="role real">Real: Jungle</span>
-      <div class="nick">V M</div>
-      <div class="tag">#JGAP</div>
+  <section class="band">
+    <div>
+      <div class="k">5/5</div>
+      <div class="l">No <b>Time 1</b>, nenhum jogador está na rota certa. A lista inteira parece
+        ter sido deslocada uma posição.</div>
     </div>
-    <div class="rank">
-      <div class="pill"><i>Solo/Duo</i><b>Esmeralda 2</b>7 LP</div>
-      <div class="pill"><i>Flex</i><b>Platina 3</b>80 LP</div>
-      <div class="pill"><i>Winrate</i><b class="lo">47%</b>200V / 223D</div>
+    <div>
+      <div class="k">2/5</div>
+      <div class="l">No <b>Time 2</b>, só <b>pardão do pneu</b> e <b>spear of hell</b> caem
+        na rota em que foram escalados.</div>
     </div>
-    <div class="sect">
-      <h3>Mais jogados na season</h3>
-      <table>
-        <tr><th>Campeão</th><th class="n">Jogos</th><th class="n">WR</th><th class="n">KDA</th></tr>
-        <tr><td class="champ">Graves</td><td class="n">167</td><td class="n wr lo">47%</td><td class="n">2.48</td></tr>
-        <tr><td class="champ">Nunu &amp; Willump</td><td class="n">149</td><td class="n wr hi">56%</td><td class="n">3.74</td></tr>
-        <tr><td class="champ">Sejuani</td><td class="n">47</td><td class="n wr mid">49%</td><td class="n">3.10</td></tr>
-      </table>
+    <div>
+      <div class="k">5</div>
+      <div class="l">Cinco dos dez são <b>meio</b> de verdade — o gargalo das duas escalações
+        não é falta de talento, é excesso de mid laner disputando a mesma vaga.</div>
     </div>
-    <div class="sect">
-      <h3>Recentes (7 dias)</h3>
-      <div class="recent">
-        <span class="chip"><b>Graves</b> 2V-3D · <span class="lo">40%</span></span>
-        <span class="chip"><b>Diana</b> 1V-2D · <span class="lo">33%</span></span>
-        <span class="chip"><b>Nunu</b> 1V-1D · <span class="mid">50%</span></span>
-      </div>
-    </div>
-    <div class="sect">
-      <h3>Leitura rápida</h3>
-      <p style="margin:0;font-size:13px;color:var(--dim)">
-        Caçador puro, maestria absurda em Nunu (1.5M pts). <b style="color:var(--gold2)">Nunu é o pick de maior
-        winrate</b> mas ele insiste mais em Graves, que está negativo. Diana recente sinaliza pick de flex/carry.
-      </p>
-    </div>
-  </div>
+  </section>
 
-  <!-- ============ Jin ============ -->
-  <div class="card">
-    <div class="chead">
-      <span class="role">Atribuído: Jungle</span>
-      <span class="role real">Real: Mid</span>
-      <div class="nick">Jin</div>
-      <div class="tag">#pos</div>
-    </div>
-    <div class="rank">
-      <div class="pill"><i>Solo/Duo</i><b>Platina 4</b>2 LP</div>
-      <div class="pill"><i>Flex</i><b>Ouro 1</b>77 LP</div>
-      <div class="pill"><i>Winrate</i><b class="mid">51%</b>108V / 104D</div>
-    </div>
-    <div class="sect">
-      <h3>Mais jogados na season</h3>
-      <table>
-        <tr><th>Campeão</th><th class="n">Jogos</th><th class="n">WR</th><th class="n">KDA</th></tr>
-        <tr><td class="champ">Malzahar</td><td class="n">43</td><td class="n wr mid">49%</td><td class="n">2.11</td></tr>
-        <tr><td class="champ">Zed</td><td class="n">33</td><td class="n wr hi">58%</td><td class="n">2.09</td></tr>
-        <tr><td class="champ">Syndra</td><td class="n">22</td><td class="n wr hi">55%</td><td class="n">1.97</td></tr>
-        <tr><td class="champ">Kayn</td><td class="n">16</td><td class="n wr mid">50%</td><td class="n">2.46</td></tr>
-        <tr><td class="champ">Xerath</td><td class="n">15</td><td class="n wr lo">40%</td><td class="n">2.52</td></tr>
-      </table>
-    </div>
-    <div class="sect">
-      <h3>Recentes (7 dias)</h3>
-      <div class="recent">
-        <span class="chip"><b>Hwei</b> 1V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Diana</b> 0V-2D · <span class="lo">0%</span></span>
-        <span class="chip"><b>Xerath</b> 0V-1D</span>
-        <span class="chip"><b>Ahri</b> 0V-1D</span>
-        <span class="chip"><b>Mordekaiser</b> 0V-1D</span>
-        <span class="chip"><b>Kayn</b> 0V-1D</span>
-        <span class="chip"><b>Zed</b> 0V-1D</span>
-      </div>
-    </div>
-    <div class="sect">
-      <h3>Leitura rápida</h3>
-      <p style="margin:0;font-size:13px;color:var(--dim)">
-        Mid clássico de assassino/mago. <b style="color:var(--gold2)">Zed é o melhor pick (58%)</b>, Malzahar é
-        o conforto. Tem Kayn de pocket pick pra jungle. Semana recente péssima — está variando demais
-        de campeão em vez de forçar o Zed.
-      </p>
-    </div>
-  </div>
+  <nav class="controls" aria-label="Filtrar dossiês">
+    <span class="eyebrow">Dossiês</span>
+    <button class="btn" data-filter="all" aria-pressed="true">Todos</button>
+    <button class="btn" data-filter="blue" aria-pressed="false">Time 1</button>
+    <button class="btn" data-filter="red" aria-pressed="false">Time 2</button>
+    <button class="btn" data-sort="rank" aria-pressed="true">Por elo</button>
+    <button class="btn" data-sort="wr" aria-pressed="false">Por winrate</button>
+  </nav>
 
-  <!-- ============ MasterZ ============ -->
-  <div class="card">
-    <div class="chead">
-      <span class="role">Atribuído: Mid</span>
-      <span class="role real">Real: Top</span>
-      <div class="nick">MasterZ</div>
-      <div class="tag">#6666</div>
-    </div>
-    <div class="rank">
-      <div class="pill"><i>Solo/Duo</i><b>Platina 4</b>40 LP</div>
-      <div class="pill"><i>Winrate</i><b class="lo">22%</b>2V / 7D</div>
-      <div class="pill"><i>Amostra</i><b>Baixa</b>9 jogos ranked</div>
-    </div>
-    <div class="sect">
-      <h3>Mais jogados na season</h3>
-      <table>
-        <tr><th>Campeão</th><th class="n">Jogos</th><th class="n">WR</th><th class="n">KDA</th></tr>
-        <tr><td class="champ">Tryndamere</td><td class="n">8</td><td class="n wr lo">25%</td><td class="n">1.59</td></tr>
-        <tr><td class="champ">Kha'Zix</td><td class="n">1</td><td class="n wr lo">0%</td><td class="n">—</td></tr>
-      </table>
-    </div>
-    <div class="sect">
-      <h3>Pool histórico (maestria)</h3>
-      <div class="recent">
-        <span class="chip"><b>Tryndamere</b> M20 · 215k</span>
-        <span class="chip"><b>Kha'Zix</b> M14 · 167k</span>
-        <span class="chip"><b>Graves</b> M12 · 142k</span>
-        <span class="chip"><b>Yasuo</b> M10 · 107k</span>
-      </div>
-    </div>
-    <div class="sect">
-      <h3>Leitura rápida</h3>
-      <p style="margin:0;font-size:13px;color:var(--dim)">
-        <b style="color:var(--warn)">Ponto fraco do time.</b> Só 9 ranked na season e 22% de WR. Topper de
-        splitpush (Trynda) com histórico secundário de jungle (Kha'Zix, Graves). Pool pequeno e sem
-        volume — é o jogador com dados menos confiáveis do grupo.
-      </p>
-    </div>
-  </div>
+  <section class="deck" id="deck"></section>
 
-  <!-- ============ SoIdado de Fé ============ -->
-  <div class="card">
-    <div class="chead">
-      <span class="role">Atribuído: ADC</span>
-      <span class="role real">Real: Mid</span>
-      <div class="nick">SoIdado de Fé</div>
-      <div class="tag">#br1</div>
-    </div>
-    <div class="rank">
-      <div class="pill"><i>Solo/Duo</i><b>Esmeralda 3</b>87 LP</div>
-      <div class="pill"><i>Winrate</i><b class="hi">52%</b>192V / 180D</div>
-      <div class="pill"><i>Pool</i><b>Largo</b>6+ campeões</div>
-    </div>
-    <div class="sect">
-      <h3>Mais jogados na season</h3>
-      <table>
-        <tr><th>Campeão</th><th class="n">Jogos</th><th class="n">WR</th><th class="n">KDA</th></tr>
-        <tr><td class="champ">Syndra</td><td class="n">54</td><td class="n wr mid">50%</td><td class="n">2.38</td></tr>
-        <tr><td class="champ">Malzahar</td><td class="n">43</td><td class="n wr hi">70%</td><td class="n">3.00</td></tr>
-        <tr><td class="champ">Mel</td><td class="n">39</td><td class="n wr mid">49%</td><td class="n">2.40</td></tr>
-        <tr><td class="champ">Cassiopeia</td><td class="n">36</td><td class="n wr hi">81%</td><td class="n">2.94</td></tr>
-        <tr><td class="champ">Diana</td><td class="n">32</td><td class="n wr lo">41%</td><td class="n">2.19</td></tr>
-        <tr><td class="champ">Caitlyn</td><td class="n">31</td><td class="n wr hi">55%</td><td class="n">2.72</td></tr>
-      </table>
-    </div>
-    <div class="sect">
-      <h3>Recentes (7 dias)</h3>
-      <div class="recent">
-        <span class="chip"><b>Cassiopeia</b> 1V-1D · <span class="mid">50%</span></span>
-        <span class="chip"><b>Yuumi</b> 1V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Ryze</b> 1V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Syndra</b> 1V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Jinx</b> 1V-0D · <span class="hi">100%</span></span>
-      </div>
-    </div>
-    <div class="sect">
-      <h3>Leitura rápida</h3>
-      <p style="margin:0;font-size:13px;color:var(--dim)">
-        <b style="color:var(--win)">Melhor jogador do grupo.</b> Maior elo, pool mais largo e dois picks
-        absurdos: <b style="color:var(--gold2)">Cassiopeia 81%</b> e Malzahar 70%. Consegue jogar ADC
-        (Caitlyn 55%, Jinx) e até suporte (Yuumi) — é o mais flexível de todos.
-      </p>
-    </div>
-  </div>
-
-  <!-- ============ Gibãobão ============ -->
-  <div class="card">
-    <div class="chead">
-      <span class="role">Atribuído: Suporte</span>
-      <span class="role real">Real: ADC</span>
-      <div class="nick">Gibãobão</div>
-      <div class="tag">#Br1</div>
-    </div>
-    <div class="rank">
-      <div class="pill"><i>Solo/Duo</i><b>Platina 4</b>59 LP</div>
-      <div class="pill"><i>Flex</i><b>Platina 4</b>0 LP</div>
-      <div class="pill"><i>Winrate</i><b class="mid">50%</b>135V / 135D</div>
-    </div>
-    <div class="sect">
-      <h3>Mais jogados na season</h3>
-      <table>
-        <tr><th>Campeão</th><th class="n">Jogos</th><th class="n">WR</th><th class="n">KDA</th></tr>
-        <tr><td class="champ">Jinx</td><td class="n">153</td><td class="n wr hi">58%</td><td class="n">2.01</td></tr>
-        <tr><td class="champ">Miss Fortune</td><td class="n">31</td><td class="n wr mid">48%</td><td class="n">1.89</td></tr>
-        <tr><td class="champ">Jhin</td><td class="n">26</td><td class="n wr hi">62%</td><td class="n">2.96</td></tr>
-        <tr><td class="champ">Olaf</td><td class="n">18</td><td class="n wr hi">61%</td><td class="n">1.70</td></tr>
-        <tr><td class="champ">Yorick</td><td class="n">17</td><td class="n wr lo">35%</td><td class="n">1.06</td></tr>
-      </table>
-    </div>
-    <div class="sect">
-      <h3>Recentes (7 dias)</h3>
-      <div class="recent">
-        <span class="chip"><b>Tahm Kench</b> 2V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Yasuo</b> 1V-0D · <span class="hi">100%</span></span>
-        <span class="chip"><b>Jhin</b> 1V-1D · <span class="mid">50%</span></span>
-        <span class="chip"><b>Jinx</b> 1V-3D · <span class="lo">25%</span></span>
-      </div>
-    </div>
-    <div class="sect">
-      <h3>Leitura rápida</h3>
-      <p style="margin:0;font-size:13px;color:var(--dim)">
-        ADC one-trick de Jinx (153 jogos, 58%). <b style="color:var(--gold2)">Jhin tem KDA muito melhor (2.96)</b>
-        e 62% de WR — é o pick subvalorizado dele. O Tahm Kench recente é o único sinal de suporte no perfil,
-        então dá pra flexar ele pro suporte se precisar.
-      </p>
-    </div>
-  </div>
+  <footer>
+    Dados extraídos do <b>op.gg</b> (servidor BR) em <b>2 de agosto de 2026</b>, referentes à
+    ranqueada solo/duo da season 2026.<br>
+    A forma recente cobre os <b>últimos 7 dias</b> e tem amostra pequena — leia como tendência, não como estatística.<br>
+    Alguns perfis foram atualizados há 4–5 dias. Para números frescos, force um <b>update</b> na página do jogador no op.gg.
+  </footer>
 
 </div>
 
-<footer>
-  Dados extraídos do <b>op.gg</b> · servidor BR · Season 2026 (ranked solo/duo).<br>
-  Winrates de "recentes" cobrem os últimos 7 dias e têm amostra pequena — leia com cautela.<br>
-  Alguns perfis foram atualizados há 4–5 dias; force um <i>update</i> no op.gg pra números 100% frescos.
-</footer>
+<script>
+const ROLE = {TOP:'Topo', JG:'Selva', MID:'Meio', ADC:'Atirador', SUP:'Suporte'};
+const ORDER = ['TOP','JG','MID','ADC','SUP'];
+const TIER = {
+  'Mestre':'--t-master','Diamante':'--t-diamond','Esmeralda':'--t-emerald',
+  'Platina':'--t-platinum','Ouro':'--t-gold','Prata':'--t-silver'
+};
+const RANKVAL = {'Mestre':6,'Diamante':5,'Esmeralda':4,'Platina':3,'Ouro':2,'Prata':1};
 
-</div>
+const PLAYERS = [
+/* ============================ TIME 1 ============================ */
+{
+  side:'blue', nick:'V M', tag:'#JGAP', slug:'V%20M-jgap',
+  assigned:'TOP', real:'JG',
+  solo:{t:'Esmeralda',d:2,lp:7}, flex:{t:'Platina',d:3,lp:80},
+  wr:47, w:200, l:223,
+  pool:[
+    {c:'Graves',g:167,wr:47,kda:2.48},
+    {c:'Nunu & Willump',g:149,wr:56,kda:3.74},
+    {c:'Sejuani',g:47,wr:49,kda:3.10}
+  ],
+  recent:[{c:'Graves',w:2,l:3},{c:'Diana',w:1,l:2},{c:'Nunu & Willump',w:1,l:1}],
+  read:'Caçador puro, com <b>1,5 milhão de pontos de maestria em Nunu</b>. O Nunu é o pick de maior winrate dele (56%), mas ele joga mais Graves, que está negativo em 167 partidas. <span class="flag">Trocar a prioridade resolve boa parte do problema.</span>'
+},
+{
+  side:'blue', nick:'Jin', tag:'#pos', slug:'Jin-pos',
+  assigned:'JG', real:'MID',
+  solo:{t:'Platina',d:4,lp:2}, flex:{t:'Ouro',d:1,lp:77},
+  wr:51, w:108, l:104,
+  pool:[
+    {c:'Malzahar',g:43,wr:49,kda:2.11},
+    {c:'Zed',g:33,wr:58,kda:2.09},
+    {c:'Syndra',g:22,wr:55,kda:1.97},
+    {c:'Kayn',g:16,wr:50,kda:2.46},
+    {c:'Xerath',g:15,wr:40,kda:2.52}
+  ],
+  recent:[{c:'Hwei',w:1,l:0},{c:'Diana',w:0,l:2},{c:'Xerath',w:0,l:1},{c:'Ahri',w:0,l:1},{c:'Mordekaiser',w:0,l:1},{c:'Kayn',w:0,l:1},{c:'Zed',w:0,l:1}],
+  read:'Meio de assassino e mago de controle. <b>Zed é o melhor pick (58%)</b> e Malzahar é o conforto. Tem Kayn guardado para a selva, o que o torna o mais fácil de reposicionar. <span class="flag">A semana recente foi 1V-7D trocando de campeão toda partida.</span>'
+},
+{
+  side:'blue', nick:'MasterZ', tag:'#6666', slug:'MasterZ-6666',
+  assigned:'MID', real:'TOP',
+  solo:{t:'Platina',d:4,lp:40}, flex:null,
+  wr:22, w:2, l:7,
+  pool:[{c:'Tryndamere',g:8,wr:25,kda:1.59},{c:"Kha'Zix",g:1,wr:0,kda:null}],
+  mastery:['Tryndamere','Kha’Zix','Graves','Yasuo'],
+  recent:[],
+  read:'<span class="flag">O ponto mais frágil das duas escalações.</span> Só <b>9 ranqueadas na season</b> e 22% de vitória. Topo de splitpush com passado de selva (Kha’Zix, Graves). O pool é curto e a amostra é pequena demais para confiar.'
+},
+{
+  side:'blue', nick:'SoIdado de Fé', tag:'#br1', slug:'SoIdado%20de%20F%C3%A9-br1',
+  assigned:'ADC', real:'MID',
+  solo:{t:'Esmeralda',d:3,lp:87}, flex:null,
+  wr:52, w:192, l:180,
+  pool:[
+    {c:'Syndra',g:54,wr:50,kda:2.38},
+    {c:'Malzahar',g:43,wr:70,kda:3.00},
+    {c:'Mel',g:39,wr:49,kda:2.40},
+    {c:'Cassiopeia',g:36,wr:81,kda:2.94},
+    {c:'Diana',g:32,wr:41,kda:2.19},
+    {c:'Caitlyn',g:31,wr:55,kda:2.72}
+  ],
+  recent:[{c:'Cassiopeia',w:1,l:1},{c:'Yuumi',w:1,l:0},{c:'Ryze',w:1,l:0},{c:'Syndra',w:1,l:0},{c:'Jinx',w:1,l:0}],
+  read:'<span class="good">O jogador mais completo do Time 1.</span> Pool largo com dois picks fora da curva: <b>Cassiopeia a 81%</b> em 36 jogos e <b>Malzahar a 70%</b> em 43. Ainda cobre atirador (Caitlyn 55%) e já jogou suporte. É quem dá mais liberdade no draft.'
+},
+{
+  side:'blue', nick:'Gibãobão', tag:'#Br1', slug:'Gib%C3%A3ob%C3%A3o-Br1',
+  assigned:'SUP', real:'ADC',
+  solo:{t:'Platina',d:4,lp:59}, flex:{t:'Platina',d:4,lp:0},
+  wr:50, w:135, l:135,
+  pool:[
+    {c:'Jinx',g:153,wr:58,kda:2.01},
+    {c:'Miss Fortune',g:31,wr:48,kda:1.89},
+    {c:'Jhin',g:26,wr:62,kda:2.96},
+    {c:'Olaf',g:18,wr:61,kda:1.70},
+    {c:'Yorick',g:17,wr:35,kda:1.06}
+  ],
+  recent:[{c:'Tahm Kench',w:2,l:0},{c:'Yasuo',w:1,l:0},{c:'Jhin',w:1,l:1},{c:'Jinx',w:1,l:3}],
+  read:'Atirador especialista em Jinx — <b>153 partidas a 58%</b>. Mas o <b>Jhin rende mais</b>: 62% de vitória e KDA 2,96 contra 2,01. O Tahm Kench recente é o único sinal de suporte no perfil; se precisar de um suporte, é por aí que começa a conversa.'
+},
+/* ============================ TIME 2 ============================ */
+{
+  side:'red', nick:'STUBBORN AS HELL', tag:'#wind', slug:'STUBBORN%20AS%20HELL-wind',
+  assigned:'TOP', real:'MID',
+  solo:{t:'Mestre',d:null,lp:1036}, flex:{t:'Diamante',d:1,lp:65},
+  wr:55, w:205, l:165, badge:'Top 0,10% do ladder · #1054',
+  pool:[
+    {c:'Yasuo',g:279,wr:54,kda:2.11},
+    {c:'Zed',g:67,wr:66,kda:2.71},
+    {c:'Yone',g:26,wr:62,kda:2.20},
+    {c:'Lulu',g:4,wr:50,kda:2.31},
+    {c:'Rammus',g:3,wr:33,kda:4.20}
+  ],
+  recent:[{c:'Yasuo',w:13,l:6},{c:'Yone',w:2,l:0},{c:'Zed',w:2,l:0}],
+  read:'<span class="good">O melhor jogador dos dez, por uma margem larga.</span> <b>Mestre com 1036 PdL</b> e Mestre/Grão-Mestre desde 2023. Yasuo one-trick (279 jogos, 2,5M de maestria) mas o <b>Zed rende mais: 66%</b>. Vem de 17V-6D nos últimos 7 dias. Constrói o time em volta dele.'
+},
+{
+  side:'red', nick:'Phelpz1', tag:'#br1', slug:'Phelpz1-br1',
+  assigned:'JG', real:'SUP',
+  solo:{t:'Esmeralda',d:3,lp:14}, flex:null,
+  wr:52, w:272, l:252, badge:'Pico: Diamante 4',
+  pool:[
+    {c:'Syndra',g:41,wr:49,kda:3.46},
+    {c:'Xayah',g:35,wr:43,kda:2.56},
+    {c:'Smolder',g:32,wr:59,kda:2.93},
+    {c:'Lucian',g:26,wr:42,kda:2.98},
+    {c:'Jinx',g:17,wr:71,kda:3.69}
+  ],
+  recent:[{c:'Lulu',w:5,l:0},{c:'Yuumi',w:4,l:0},{c:'Miss Fortune',w:3,l:0},{c:'Blitzcrank',w:3,l:0},{c:'Jinx',w:5,l:1}],
+  read:'Caso dividido: a season inteira foi <b>meio e atirador</b>, mas a semana recente é <b>suporte puro</b> — Lulu, Yuumi e Blitzcrank, todos invictos. <span class="good">20V-1D nos últimos 7 dias.</span> Está migrando de rota agora, e funcionando.'
+},
+{
+  side:'red', nick:'pardão do pneu', tag:'#PNEU', slug:'pard%C3%A3o%20do%20pneu-PNEU',
+  assigned:'MID', real:'MID',
+  solo:{t:'Diamante',d:1,lp:1}, flex:{t:'Esmeralda',d:2,lp:32},
+  wr:55, w:119, l:96,
+  pool:[
+    {c:'Yasuo',g:100,wr:61,kda:1.49},
+    {c:'Lux',g:25,wr:56,kda:2.59},
+    {c:'Zed',g:22,wr:45,kda:2.00},
+    {c:'Ekko',g:16,wr:63,kda:1.82},
+    {c:'Mordekaiser',g:14,wr:71,kda:1.72}
+  ],
+  recent:[{c:'Camille',w:3,l:0},{c:'Syndra',w:1,l:0},{c:'Yasuo',w:1,l:1},{c:'Ekko',w:1,l:3}],
+  read:'<span class="good">Escalado certo.</span> Diamante 1 com <b>Yasuo a 61% em 100 jogos</b> e 1,2M de maestria. Mordekaiser (71%) e Ekko (63%) são os picks secundários fortes. O KDA baixo revela o estilo: agressivo, troca vida por pressão. <span class="flag">Conflita com STUBBORN — os dois são one-trick de Yasuo.</span>'
+},
+{
+  side:'red', nick:'spear of hell', tag:'#BR1', slug:'spear%20of%20hell-BR1',
+  assigned:'ADC', real:'ADC',
+  solo:{t:'Prata',d:1,lp:57}, flex:{t:'Ouro',d:2,lp:85},
+  wr:52, w:17, l:16, badge:'Pico: Platina 4',
+  pool:[
+    {c:'Tristana',g:3,wr:100,kda:2.20},
+    {c:'Vayne',g:4,wr:25,kda:2.20},
+    {c:'Caitlyn',g:3,wr:33,kda:1.74},
+    {c:'Lucian',g:2,wr:50,kda:3.00},
+    {c:'Jinx',g:2,wr:50,kda:2.31}
+  ],
+  recent:[{c:'Tristana',w:1,l:1},{c:'Galio',w:1,l:0},{c:'Thresh',w:1,l:0},{c:'Caitlyn',w:0,l:1}],
+  read:'<span class="good">Escalado certo</span>, mas <span class="flag">é o maior salto de elo do grupo</span>: Prata 1 num time com Mestre e Diamante. Atirador de verdade — <b>861 mil de maestria em Vayne</b> — só que com 33 ranqueadas na season, nenhum número aqui é confiável ainda.'
+},
+{
+  side:'red', nick:'MilkDeFeijoN', tag:'#kkkk', slug:'MilkDeFeijoN-kkkk',
+  assigned:'SUP', real:'MID',
+  solo:{t:'Esmeralda',d:1,lp:74}, flex:null,
+  wr:44, w:71, l:92,
+  pool:[
+    {c:'Mel',g:18,wr:33,kda:1.97},
+    {c:'Caitlyn',g:15,wr:40,kda:1.13},
+    {c:'Ahri',g:12,wr:42,kda:2.16},
+    {c:'Hwei',g:11,wr:55,kda:1.87},
+    {c:'Heimerdinger',g:10,wr:60,kda:1.37},
+    {c:'Brand',g:9,wr:67,kda:1.83}
+  ],
+  recent:[{c:'Tristana',w:1,l:0},{c:'Caitlyn',w:0,l:1}],
+  read:'Esmeralda 1, mas <b>44% de vitória em 163 jogos</b> — o elo veio de antes. Joga meio e mago no bot. <span class="good">Os picks que funcionam são os de menor volume:</span> Brand 67%, Heimerdinger 60%, Hwei 55%. Os mais jogados (Mel 33%, Caitlyn 40%) são os que estão puxando o winrate para baixo.'
+}
+];
+
+/* ---------- champion portraits ---------- */
+const KEY_FIX = {'Nunu & Willump':'Nunu',"Kha'Zix":'Khazix','Kha’Zix':'Khazix'};
+let DDV = '15.13.1';
+const champKey = n => KEY_FIX[n] || n.replace(/[^A-Za-z]/g,'');
+const champURL = n => `https://ddragon.leagueoflegends.com/cdn/${DDV}/img/champion/${champKey(n)}.png`;
+const initials = n => n.replace(/[^A-Za-z ]/g,'').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+
+function img(name, cls){
+  const safe = name.replace(/'/g,'&#39;');
+  return `<img class="${cls}" src="${champURL(name)}" alt="${safe}" loading="lazy"
+    onerror="this.outerHTML='<span class=&quot;${cls} ph&quot; title=&quot;${safe}&quot;>${initials(name)}</span>'">`;
+}
+
+const wrClass = v => v >= 55 ? 'hi' : v <= 45 ? 'lo' : 'ev';
+const wrColor = v => v >= 55 ? 'var(--win)' : v <= 45 ? 'var(--loss)' : 'var(--gold)';
+const rankStr = r => r ? (r.d ? `${r.t} ${r.d}` : r.t) : null;
+
+/* ---------- rails ---------- */
+function buildRails(){
+  const html = ['blue','red'].map(side=>{
+    const team = PLAYERS.filter(p=>p.side===side);
+    const label = side==='blue' ? 'Time 1' : 'Time 2';
+    const drift = team.filter(p=>p.assigned!==p.real).length;
+    const left = ORDER.map(r=>{
+      const p = team.find(x=>x.assigned===r);
+      return `<div class="slot" data-slot="L-${side}-${r}">
+        <span class="role">${ROLE[r]}</span>
+        <span class="who"><span class="n">${p.nick}</span><span class="t">${p.tag}</span></span>
+      </div>`;
+    }).join('');
+    const right = ORDER.map(r=>{
+      const hit = team.some(x=>x.real===r && x.assigned===r);
+      const who = team.filter(x=>x.real===r).map(x=>x.nick).join(', ') || '—';
+      return `<div class="slot target${hit?' hit':''}" data-slot="R-${side}-${r}">
+        <span class="who"><span class="n">${who}</span></span>
+        <span class="role">${ROLE[r]}</span>
+      </div>`;
+    }).join('');
+    return `<article class="rail" data-side="${side}">
+      <div class="rail-head">
+        <h2>${label}</h2>
+        <span class="count">${drift} de 5 fora de rota</span>
+      </div>
+      <div class="rail-legend"><span>Atribuído</span><span class="mid"></span><span class="r">Real</span></div>
+      <div class="rail-grid">
+        <div class="rail-col">${left}</div>
+        <div class="rail-col"></div>
+        <div class="rail-col targets">${right}</div>
+      </div>
+      <svg aria-hidden="true"></svg>
+    </article>`;
+  }).join('');
+  document.getElementById('rails').innerHTML = html;
+}
+
+function drawRails(){
+  document.querySelectorAll('.rail').forEach(rail=>{
+    const svg = rail.querySelector('svg');
+    if(getComputedStyle(svg).display === 'none'){ svg.innerHTML=''; return; }
+    const side = rail.dataset.side;
+    const box = rail.getBoundingClientRect();
+    const stroke = side==='blue' ? 'var(--beacon)' : 'var(--ember)';
+    let out = '';
+    PLAYERS.filter(p=>p.side===side).forEach((p,i)=>{
+      const a = rail.querySelector(`[data-slot="L-${side}-${p.assigned}"]`);
+      const b = rail.querySelector(`[data-slot="R-${side}-${p.real}"]`);
+      if(!a||!b) return;
+      const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+      const x1 = ar.right - box.left + 4, y1 = ar.top + ar.height/2 - box.top;
+      const x2 = br.left - box.left - 4,  y2 = br.top + br.height/2 - box.top;
+      const dx = (x2-x1) * .55;
+      const same = p.assigned === p.real;
+      const col = same ? 'var(--gold)' : stroke;
+      const len = Math.hypot(x2-x1, y2-y1) + Math.abs(y2-y1);
+      out += `<path d="M${x1},${y1} C${x1+dx},${y1} ${x2-dx},${y2} ${x2},${y2}"
+        stroke="${col}" opacity="${same?.95:.6}"
+        style="--len:${len.toFixed(0)};--d:${(i*.09).toFixed(2)}s"/>
+        <circle cx="${x2}" cy="${y2}" r="2.6" fill="${col}" style="--d:${(i*.09).toFixed(2)}s"/>`;
+    });
+    svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    svg.innerHTML = out;
+  });
+}
+
+/* ---------- dossiers ---------- */
+function card(p){
+  const sig = p.pool[0] ? p.pool[0].c : (p.mastery ? p.mastery[0] : null);
+  const same = p.assigned === p.real;
+  const solo = rankStr(p.solo), flex = rankStr(p.flex);
+  const tvar = TIER[p.solo.t] || '--chalk';
+
+  const pool = p.pool.map(c=>`
+    <div class="pick">
+      ${img(c.c,'')}
+      <div class="body">
+        <div class="row1">
+          <span class="cname">${c.c}</span>
+          <span class="g">${c.g}j</span>
+        </div>
+        <div class="track"><span data-w="${c.wr}" style="background:${wrColor(c.wr)}"></span></div>
+      </div>
+      <div class="nums">
+        <span class="wr ${wrClass(c.wr)}">${c.wr}%</span>
+        <span class="kda">${c.kda ? c.kda.toFixed(2) : '—'}</span>
+      </div>
+    </div>`).join('');
+
+  const recent = p.recent.length ? `
+    <div class="d-sect">
+      <h4>Forma · últimos 7 dias</h4>
+      <div class="form">${p.recent.map(r=>{
+        const tot = r.w + r.l, pc = Math.round(r.w/tot*100);
+        return `<span class="fchip">${img(r.c,'')}<span>${r.c}</span>
+          <em class="${wrClass(pc)}">${r.w}V-${r.l}D</em></span>`;
+      }).join('')}</div>
+    </div>` : '';
+
+  const masteryRow = p.mastery ? `
+    <div class="d-sect">
+      <h4>Pool histórico · maestria</h4>
+      <div class="form">${p.mastery.map(c=>`<span class="fchip">${img(c,'')}<span>${c}</span></span>`).join('')}</div>
+    </div>` : '';
+
+  return `<article class="dossier" data-side="${p.side}"
+      data-rank="${RANKVAL[p.solo.t]*1000 + (p.solo.d?(5-p.solo.d)*100:900) + Math.min(p.solo.lp,99)}"
+      data-wr="${p.wr}">
+    <div class="d-head">
+      ${sig ? img(sig,'portrait') : '<span class="portrait ph">?</span>'}
+      <div class="d-id">
+        <h3>${p.nick}</h3>
+        <div class="tagline">${p.tag}</div>
+        <div class="roles">
+          <span class="chip-role">${ROLE[p.assigned]}</span>
+          <span class="arrow${same?' same':''}" aria-label="${same?'confere':'na verdade joga'}">${same?'✓':'→'}</span>
+          <span class="chip-role real">${ROLE[p.real]}</span>
+        </div>
+      </div>
+    </div>
+    <div class="d-rank">
+      <div class="stat" style="--tier:var(${tvar})">
+        <i>Solo/Duo</i><b>${solo}</b><small>${p.solo.lp} PdL</small>
+      </div>
+      ${flex ? `<div class="stat"><i>Flex</i><b>${flex}</b><small>${p.flex.lp} PdL</small></div>` : ''}
+      <div class="stat">
+        <i>Vitórias</i><b class="${wrClass(p.wr)}">${p.wr}%</b><small>${p.w}V ${p.l}D</small>
+      </div>
+    </div>
+    ${p.badge ? `<div class="d-sect" style="padding-top:0;border:0"><span class="chip-role" style="color:var(--gold);border-color:var(--gold)">${p.badge}</span></div>` : ''}
+    <div class="d-sect">
+      <h4>Mais jogados na season</h4>
+      <div class="pool">${pool}</div>
+    </div>
+    ${masteryRow}
+    ${recent}
+    <div class="read">${p.read}</div>
+    <div class="d-foot"><a href="https://op.gg/lol/summoners/br/${p.slug}" target="_blank" rel="noopener">Perfil no op.gg ↗</a></div>
+  </article>`;
+}
+
+function render(){
+  document.getElementById('deck').innerHTML = PLAYERS.map(card).join('');
+  observeBars();
+}
+
+/* ---------- bars ---------- */
+function observeBars(){
+  const bars = document.querySelectorAll('.track span');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ bars.forEach(b=>b.style.width = b.dataset.w + '%'); return; }
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){ e.target.style.width = e.target.dataset.w + '%'; io.unobserve(e.target); }
+    });
+  },{threshold:.2});
+  bars.forEach(b=>io.observe(b));
+}
+
+/* ---------- controls ---------- */
+function wireControls(){
+  const deck = document.getElementById('deck');
+  document.querySelectorAll('[data-filter]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed', b===btn));
+      const f = btn.dataset.filter;
+      deck.querySelectorAll('.dossier').forEach(c=>{
+        c.style.display = (f==='all' || c.dataset.side===f) ? '' : 'none';
+      });
+    });
+  });
+  document.querySelectorAll('[data-sort]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('[data-sort]').forEach(b=>b.setAttribute('aria-pressed', b===btn));
+      const k = btn.dataset.sort;
+      [...deck.children]
+        .sort((a,b)=> Number(b.dataset[k]) - Number(a.dataset[k]))
+        .forEach(c=>deck.appendChild(c));
+    });
+  });
+  document.querySelector('[data-sort=rank]').click();
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  try{
+    const res = await Promise.race([
+      fetch('https://ddragon.leagueoflegends.com/api/versions.json').then(r=>r.json()),
+      new Promise((_,rej)=>setTimeout(rej,1800))
+    ]);
+    if(Array.isArray(res) && res[0]) DDV = res[0];
+  }catch(e){ /* mantém a versão de fallback */ }
+
+  buildRails();
+  render();
+  wireControls();
+  requestAnimationFrame(drawRails);
+  addEventListener('resize', () => { clearTimeout(window.__t); window.__t = setTimeout(drawRails,120); });
+  if(document.fonts) document.fonts.ready.then(drawRails);
+})();
+</script>
 </body>
 </html>
